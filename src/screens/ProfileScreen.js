@@ -20,6 +20,7 @@ import {
   Feather,
 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const Container = styled.View`
   flex: 1;
@@ -62,6 +63,8 @@ const ProfileScreen = () => {
 
     try {
       await AsyncStorage.multiRemove([useId, "id"]);
+      await GoogleSignin.revokeAccess();
+      await auth().signOut();
       navigation.replace("Home");
     } catch (error) {
       console.log("Error logging out the user: ", error);
