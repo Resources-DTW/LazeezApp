@@ -126,10 +126,10 @@ const LoginScreen = ({ navigation }) => {
       "586012277192-cgol7jl7d4582avlvdierd1f5kkhn64p.apps.googleusercontent.com",
   });
 
-  function onAuthStateChanged(user) {
+  const onAuthStateChanged = (user) => {
     setUser(user);
     if (initializing) setInitializing(false);
-  }
+  };
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
