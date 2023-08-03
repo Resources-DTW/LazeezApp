@@ -2,6 +2,16 @@
   "expo": {
     "name": "LazeezApp",
     "slug": "LazeezApp",
+    "plugins": [
+      "@react-native-google-signin/google-signin", 
+      [
+      "react-native-fbsdk-next", 
+      {
+      "appID": "1405026683398546",
+      "clientToken": "d7b748996f88a46068f7b48aaf0fc6d5",
+      "displayName": "Lazeez Kitchen"
+    }]
+  ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,13 +28,20 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.lazeez.dtw"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "57110964-90b5-4e6a-8b8c-8a3d12f6d601"
+      }
     }
   }
 }
