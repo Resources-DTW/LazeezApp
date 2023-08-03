@@ -63,8 +63,8 @@ const ProfileScreen = () => {
 
     try {
       await AsyncStorage.multiRemove([useId, "id"]);
-      await GoogleSignin.revokeAccess();
-      await auth().signOut();
+      // await GoogleSignin.revokeAccess();
+      // await auth().signOut();
       navigation.replace("Home");
     } catch (error) {
       console.log("Error logging out the user: ", error);
@@ -128,8 +128,14 @@ const ProfileScreen = () => {
         <View style={{ alignItems: "center", marginTop: 25 }}>
           <View>
             <Image
-              style={{ height: 100, width: 100 }}
-              source={require("../assets/images/user.png")}
+              style={{
+                height: 100,
+                width: 100,
+                borderWidth: 1,
+                borderRadius: 50,
+                borderColor: "black",
+              }}
+              source={require("../assets/images/user.jpg")}
             />
             <TouchableOpacity
               onPress={() => {}}
