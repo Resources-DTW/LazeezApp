@@ -143,10 +143,14 @@ const LoginScreen = ({ navigation }) => {
 
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    const token = googleCredential.token;
+    // console.log(token);
     // Sign-in the user with the credential
     // const user_sign_in = auth().signInWithCredential(googleCredential);
     // console.log(user.uid);
-    setResponseData(user);
+    setResponseData(token);
+    console.log(responseData);
+    // console.log(responseData);
   };
 
   if (initializing) return null;
