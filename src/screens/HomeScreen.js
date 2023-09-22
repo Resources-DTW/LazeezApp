@@ -1,4 +1,9 @@
-import { SafeAreaView, Platform, ScrollView } from "react-native";
+import {
+  SafeAreaView,
+  Platform,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
@@ -21,6 +26,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
   const [userLogin, setUserLogin] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     checkExistingUser();
@@ -43,6 +49,14 @@ const HomeScreen = () => {
     }
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    checkExistingUser();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -53,7 +67,12 @@ const HomeScreen = () => {
     >
       <HomeHeader userData={userData} />
       <HomeSearchBar />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        showsVerticalScrollIndicator={false}
+      >
         <MainCarousel />
         <Categories />
         <HorizontalCard />

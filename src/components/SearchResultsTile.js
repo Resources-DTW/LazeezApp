@@ -30,7 +30,7 @@ const SearchResultsTile = ({ item }) => {
           <Text style={{ fontSize: 16, fontWeight: 600, marginLeft: 20 }}>
             {item.title}
           </Text>
-          <Text style={{ marginLeft: 20, marginTop: 5 }}>{item.price}</Text>
+          <Text style={{ marginLeft: 20, marginTop: 5 }}>₹ {item.price}</Text>
         </View>
       </View>
     </TouchableOpacity>

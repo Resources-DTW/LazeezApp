@@ -9,6 +9,7 @@ import {
   Image,
   TextInput,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -21,7 +22,18 @@ const isAndroid = Platform.OS === "android";
 
 const CartScreen = () => {
   const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [select, setSelect] = useState(false);
   const { cartData, loading, cartError, refetch } = useFetch();
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    refetch();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
 
   return (
     <SafeAreaView
@@ -62,7 +74,11 @@ const CartScreen = () => {
           </Text>
         </View>
       </View>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View>
           {loading ? (
             <ActivityIndicator size={"large"} color={"orange"} />
@@ -70,7 +86,15 @@ const CartScreen = () => {
             <FlatList
               data={cartData}
               keyExtractor={(item) => item._id}
-              renderItem={({ item }) => <CartTile item={item} />}
+              renderItem={({ item }) => (
+                <CartTile
+                  onPress={() => {
+                    setSelect(!select);
+                  }}
+                  item={item}
+                  select={select}
+                />
+              )}
             />
           )}
         </View>
@@ -78,7 +102,7 @@ const CartScreen = () => {
           <TextInput
             style={{
               backgroundColor: "white",
-              borderWidth: 0.3,
+              borderWidth: Platform === "ANDROID" ? 0.3 : 0,
               padding: 15,
               borderTopLeftRadius: 10,
               borderBottomLeftRadius: 10,
@@ -94,6 +118,7 @@ const CartScreen = () => {
               padding: 15,
               borderTopRightRadius: 10,
               borderBottomRightRadius: 10,
+              elevation: 3,
             }}
           >
             <Text style={{ color: "white", fontWeight: 600 }}>

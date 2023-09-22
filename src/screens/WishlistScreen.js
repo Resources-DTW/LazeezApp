@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Alert,
+  RefreshControl,
   FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -18,6 +18,7 @@ const isAndroid = Platform.OS === "android";
 
 const WishlistScreen = () => {
   const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
   const [favData, setFavData] = useState([]);
 
   useEffect(() => {
@@ -59,6 +60,14 @@ const WishlistScreen = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    checkFavorites();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
   };
 
   return (
@@ -103,6 +112,9 @@ const WishlistScreen = () => {
         </View>
         <View>
           <FlatList
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             data={favData}
             renderItem={({ item }) => (
               <View

@@ -9,6 +9,7 @@ import {
   Linking,
   Alert,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
@@ -175,7 +176,7 @@ const LoginScreen = ({ navigation }) => {
       <View
         style={{
           backgroundColor: "#fff",
-          height: 150,
+          height: 100,
           width: "100%",
           top: 50,
           borderTopLeftRadius: 30,
@@ -184,130 +185,138 @@ const LoginScreen = ({ navigation }) => {
         }}
       />
       <Container>
-        <View
-          style={{
-            marginTop: -50,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", fontSize: 20, fontWeight: 500 }}>
-            Login With Email
-          </Text>
-        </View>
-        <Formik
-          initialValues={{ username: "", password: "" }}
-          validationSchema={validationSchema}
-          onSubmit={(values) => login(values)}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            setFieldTouched,
-            isValid,
-          }) => (
-            <View>
+        <ScrollView>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              style={{ textAlign: "center", fontSize: 20, fontWeight: 500 }}
+            >
+              Login With Email
+            </Text>
+          </View>
+          <Formik
+            initialValues={{ username: "", password: "" }}
+            validationSchema={validationSchema}
+            onSubmit={(values) => login(values)}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              setFieldTouched,
+              isValid,
+            }) => (
               <View>
-                <View style={{ marginHorizontal: 20 }}>
-                  <TextInput
-                    style={{ marginTop: 20, backgroundColor: "white" }}
-                    keyboardType="default"
-                    mode="outlined"
-                    outlineColor="#DADADA"
-                    activeOutlineColor="#F49F1C"
-                    onFocus={() => setFieldTouched("username")}
-                    onBlur={() => setFieldTouched("username", "")}
-                    value={values.username}
-                    onChangeText={handleChange("username")}
-                    label="Username"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder="Enter Your Username"
-                  />
+                <View>
+                  <View style={{ marginHorizontal: 20 }}>
+                    <TextInput
+                      style={{ marginTop: 20, backgroundColor: "white" }}
+                      keyboardType="default"
+                      mode="outlined"
+                      outlineColor="#DADADA"
+                      activeOutlineColor="#F49F1C"
+                      onFocus={() => setFieldTouched("username")}
+                      onBlur={() => setFieldTouched("username", "")}
+                      value={values.username}
+                      onChangeText={handleChange("username")}
+                      label="Username"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      placeholder="Enter Your Username"
+                    />
+                  </View>
+                  <View style={{ marginHorizontal: 20 }}>
+                    <TextInput
+                      style={{ marginTop: 20, backgroundColor: "white" }}
+                      label="Password"
+                      secureTextEntry={visible}
+                      onFocus={() => setFieldTouched("password")}
+                      onBlur={() => setFieldTouched("password", "")}
+                      value={values.password}
+                      onChangeText={handleChange("password")}
+                      autoCapitalize="none"
+                      mode="outlined"
+                      outlineColor="#DADADA"
+                      activeOutlineColor="#F49F1C"
+                      right={
+                        <TextInput.Icon
+                          icon={visible ? "eye-off-outline" : "eye-outline"}
+                          onPress={() => setVisible(!visible)}
+                        />
+                      }
+                    />
+                  </View>
                 </View>
-                <View style={{ marginHorizontal: 20 }}>
-                  <TextInput
-                    style={{ marginTop: 20, backgroundColor: "white" }}
-                    label="Password"
-                    secureTextEntry={visible}
-                    onFocus={() => setFieldTouched("password")}
-                    onBlur={() => setFieldTouched("password", "")}
-                    value={values.password}
-                    onChangeText={handleChange("password")}
-                    autoCapitalize="none"
-                    mode="outlined"
-                    outlineColor="#DADADA"
-                    activeOutlineColor="#F49F1C"
-                    right={
-                      <TextInput.Icon
-                        icon={visible ? "eye-off-outline" : "eye-outline"}
-                        onPress={() => setVisible(!visible)}
-                      />
-                    }
-                  />
-                </View>
-              </View>
-              <View
-                style={{
-                  alignItems: "center",
-                  marginTop: 30,
-                  marginHorizontal: 20,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={handleSubmit}
+
+                <View
                   style={{
-                    backgroundColor: "#F49F1C",
-                    height: 50,
-                    width: "100%",
                     alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 5,
+                    marginTop: 30,
+                    marginHorizontal: 20,
                   }}
                 >
-                  {isLoading === false ? (
-                    <Text
-                      style={{ color: "white", fontWeight: 700, fontSize: 16 }}
-                    >
-                      LOGIN
-                    </Text>
-                  ) : (
-                    <ActivityIndicator size={"small"} color={"white"} />
-                  )}
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={handleSubmit}
+                    style={{
+                      backgroundColor: "#F49F1C",
+                      height: 50,
+                      width: "100%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 5,
+                    }}
+                  >
+                    {isLoading === false ? (
+                      <Text
+                        style={{
+                          color: "white",
+                          fontWeight: 700,
+                          fontSize: 16,
+                        }}
+                      >
+                        LOGIN
+                      </Text>
+                    ) : (
+                      <ActivityIndicator size={"small"} color={"white"} />
+                    )}
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          )}
-        </Formik>
-        <View
-          style={{
-            marginTop: 30,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={{ fontWeight: 600, fontSize: 16, color: "#F49F1C" }}>
-              Register
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <OrContainer>
-          <OrLine />
-          <Text style={{ fontSize: 14, textAlign: "center" }}>Or</Text>
-          <OrLine />
-        </OrContainer>
-        <SocialIconContainer>
-          <TouchableOpacity onPress={onGoogleButtonPress}>
-            <Image source={require("../assets/images/gmail.png")} />
-          </TouchableOpacity>
-          {/* For FB Login : https://www.youtube.com/watch?v=SDOJo8m9DNY */}
-          <TouchableOpacity onPress={() => console.log("Facebook Login")}>
-            <Image source={require("../assets/images/fb.png")} />
-          </TouchableOpacity>
-        </SocialIconContainer>
+            )}
+          </Formik>
+          <View
+            style={{
+              marginTop: 30,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+              <Text style={{ fontWeight: 600, fontSize: 16, color: "#F49F1C" }}>
+                Register
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <OrContainer>
+            <OrLine />
+            <Text style={{ fontSize: 14, textAlign: "center" }}>Or</Text>
+            <OrLine />
+          </OrContainer>
+          <SocialIconContainer>
+            <TouchableOpacity onPress={onGoogleButtonPress}>
+              <Image source={require("../assets/images/gmail.png")} />
+            </TouchableOpacity>
+            {/* For FB Login : https://www.youtube.com/watch?v=SDOJo8m9DNY */}
+            <TouchableOpacity onPress={() => console.log("Facebook Login")}>
+              <Image source={require("../assets/images/fb.png")} />
+            </TouchableOpacity>
+          </SocialIconContainer>
+        </ScrollView>
       </Container>
     </SafeAreaView>
   );

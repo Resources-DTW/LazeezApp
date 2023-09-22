@@ -9,6 +9,7 @@ import HomeScreen from "../screens/HomeScreen";
 import Searchbar from "../components/Searchbar";
 import ProductDetailScreen from "../screens/ProductDetailScreen";
 import { HomeNavigator } from "./HomeNavigator";
+import CameraScreen from "../screens/CameraScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +55,11 @@ const AppNavigator = () => {
         options={{ headerShown: false, gestureEnabled: false }}
         name="ProductDetailScreen"
         component={ProductDetailScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, gestureEnabled: false }}
+        name="Camera"
+        component={CameraScreen}
       />
     </Stack.Navigator>
   );

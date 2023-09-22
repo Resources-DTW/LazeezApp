@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Platform } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -17,7 +17,7 @@ const HorizontalCardDetail = ({ item }) => {
         marginHorizontal: 10,
         marginVertical: 5,
         borderRadius: 10,
-        borderWidth: 0.4,
+        borderWidth: Platform === "ANDROID" ? 0.4 : 0,
         borderColor: "#000",
       }}
     >

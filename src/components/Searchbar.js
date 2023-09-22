@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
@@ -20,6 +21,15 @@ const Searchbar = () => {
   const navigation = useNavigation();
   const [searchKey, setSearchKey] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    handleSearchTerm();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
 
   //https://scary-polo-shirt-mite.cyclic.app - cyclic deploy
   //192.168.0.129, 192.168.0.124 - company ipv4
@@ -29,7 +39,6 @@ const Searchbar = () => {
       const response = await axios.get(
         `https://scary-polo-shirt-mite.cyclic.app/api/products/search/${searchKey}`
       );
-      console.log(response.data);
       setSearchResults(response.data);
     } catch (error) {
       console.log("Failed to get products: ", error);
@@ -93,6 +102,9 @@ const Searchbar = () => {
         </View>
       ) : (
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           data={searchResults}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => <SearchResultsTile item={item} />}

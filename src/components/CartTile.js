@@ -1,10 +1,17 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const CartTile = ({ item }) => {
+const CartTile = ({ item, select, onPress }) => {
   const [loading, setLoader] = useState(false);
   const [cartData, setCartData] = useState([]);
 
@@ -38,16 +45,17 @@ const CartTile = ({ item }) => {
 
   return (
     <ScrollView>
-      <View
+      <TouchableOpacity
+        onPress={() => {}}
         style={{
           height: 120,
           marginHorizontal: 20,
           marginVertical: 10,
           padding: 10,
-          backgroundColor: "white",
+          backgroundColor: !select ? "white" : "red",
           elevation: 3,
           width: "90%",
-          borderWidth: 0.3,
+          borderWidth: Platform === "ANDROID" ? 0.3 : 0,
           borderColor: "black",
           borderRadius: 10,
           justifyContent: "center",
@@ -132,13 +140,13 @@ const CartTile = ({ item }) => {
             </View>
             <TouchableOpacity
               onPress={() => {}}
-              style={{ position: "absolute", left: 235 }}
+              style={{ position: "absolute", left: "115%" }}
             >
               <MaterialIcons name="cancel" size={24} color="orange" />
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

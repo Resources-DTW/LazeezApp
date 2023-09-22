@@ -7,8 +7,9 @@ import {
   Image,
   ScrollView,
   Alert,
+  RefreshControl,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useFocusEffect } from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -33,6 +34,7 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
   const [userLogin, setUserLogin] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     checkExistingUser();
@@ -85,6 +87,14 @@ const ProfileScreen = () => {
     ]);
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    checkExistingUser();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -93,7 +103,11 @@ const ProfileScreen = () => {
         flex: 1,
       }}
     >
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View
           style={{
             height: 50,

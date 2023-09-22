@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Platform,
+} from "react-native";
 import React from "react";
 import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -19,7 +26,7 @@ const VerticalCardDetail = ({ item }) => {
             height: 120,
             width: 350,
             borderRadius: 10,
-            borderWidth: 0.4,
+            borderWidth: Platform === "ANDROID" ? 0.4 : 0,
             borderColor: "#000",
           }}
         >
